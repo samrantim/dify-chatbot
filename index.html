@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Chaiyaphum Tour AI Chatbot</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+
+      /* Container สำหรับ responsive */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Header section */
+      .header {
+        background: white;
+        border-radius: 16px 16px 0 0;
+        padding: 20px 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .header h1 {
+        font-size: 24px;
+        color: #1a1a2e;
+        margin-bottom: 8px;
+      }
+
+      .header p {
+        color: #666;
+        font-size: 14px;
+      }
+
+      /* Chat container - ที่นี่จะฝัง Dify */
+      .chat-container {
+        flex: 1;
+        background: white;
+        border-radius: 0 0 16px 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        position: relative;
+      }
+
+      /* Dify iframe จะเต็มพื้นที่ */
+      .chat-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* Responsive สำหรับมือถือ */
+      @media (max-width: 768px) {
+        .container {
+          padding: 10px;
+        }
+
+        .header {
+          padding: 16px 20px;
+        }
+
+        .header h1 {
+          font-size: 20px;
+        }
+      }
+
+      /* Loading indicator ขณะโหลด Dify */
+      .loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #666;
+      }
+
+      .spinner {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #667eea;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 12px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🤖 Chaiyaphum Tour AI Assistant</h1>
+        <p>น้องภูมิ-ยินดีต้อนรับครับ </p>
+      </div>
+
+      <div class="chat-container">
+        
+
+        <!-- 🔴 IMPORTANT: ใส่ Code Iframe ของ Dify ตรงนี้ 🔴 -->
+        <iframe
+          src="http://phumtour.cpru.ac.th/chatbot/OTMObEwCX4ppTN8u"
+          style="width: 100%; height: 100%; min-height: 700px"
+          frameborder="0"
+          allow="microphone"
+        >
+        </iframe>
+      </div>
+    </div>
+
+    <script>
+      // ตัวเลือกเพิ่มเติม: รีเฟรชขนาดเมื่อ window เปลี่ยน
+      window.addEventListener("resize", function () {
+        const iframe = document.getElementById("dify-iframe");
+        if (iframe) {
+          // บังคับให้ iframe ปรับขนาด
+          iframe.style.height = "100%";
+        }
+      });
+
+      // ตรวจสอบว่า Dify พร้อมใช้งานแล้ว
+      window.addEventListener("message", function (event) {
+        // รับ event จาก Dify (ถ้าต้องการ)
+        if (event.data && event.data.type === "dify-ready") {
+          console.log("Dify chatbot ready");
+          document.getElementById("loading").style.display = "none";
+        }
+      });
+    </script>
+  </body>
+</html>
