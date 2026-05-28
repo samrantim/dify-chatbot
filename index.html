@@ -1,13 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
   <head>
     <meta charset="UTF-8" />
+
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <title>Chaiyaphum Tour AI Chatbot</title>
+
+    <title>Chaiyaphum Tour AI Assistant</title>
+
     <style>
+      /* RESET */
       * {
         margin: 0;
         padding: 0;
@@ -16,158 +20,279 @@
 
       html,
       body {
+        width: 100%;
         height: 100%;
-        overflow: hidden;
       }
 
       body {
         font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-          "Helvetica Neue", Arial, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+
+        background:
+          linear-gradient(
+            135deg,
+            #667eea 0%,
+            #764ba2 100%
+          );
+
+        overflow: hidden;
       }
 
-      /* Container สำหรับ responsive */
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-        height: 100vh;
+      /* APP */
+      .app {
+        width: 100%;
+        height: 100dvh;
+
+        padding: 12px;
+
         display: flex;
         flex-direction: column;
 
-        overflow: hidden;
+        gap: 12px;
       }
 
-      /* Header section */
+      /* HEADER */
       .header {
-        background: white;
-        border-radius: 16px 16px 0 0;
+        background: rgba(255, 255, 255, 0.95);
+
+        backdrop-filter: blur(12px);
+
+        border-radius: 24px;
+
         padding: 20px 24px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-        flex-shrink: 0; /* สำคัญ */
+        box-shadow:
+          0 4px 20px rgba(0, 0, 0, 0.08),
+          0 2px 6px rgba(0, 0, 0, 0.04);
+
+        flex-shrink: 0;
+
+        z-index: 10;
       }
 
-      .header h1 {
-        font-size: 24px;
-        color: #1a1a2e;
-        margin-bottom: 8px;
+      .header-top {
+        display: flex;
+        align-items: center;
+        gap: 14px;
       }
 
-      .header p {
-        color: #666;
+      .logo {
+        width: 54px;
+        height: 54px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 16px;
+
+        background:
+          linear-gradient(
+            135deg,
+            #667eea,
+            #764ba2
+          );
+
+        color: white;
+
+        font-size: 28px;
+
+        box-shadow:
+          0 4px 12px rgba(102, 126, 234, 0.4);
+      }
+
+      .header-text h1 {
+        font-size: 22px;
+        font-weight: 700;
+
+        color: #111827;
+      }
+
+      .header-text p {
+        margin-top: 4px;
+
+        color: #6b7280;
+
         font-size: 14px;
       }
 
-      /* Chat container - ที่นี่จะฝัง Dify */
-      .chat-container {
-        height: calc(100vh - 140px);
-        padding-top: 10px;
-        /*flex: 1; */
+      /* CHAT */
+      .chat-wrapper {
+        flex: 1;
 
-        /*min-height: 0;*/ /* สำคัญมาก */
+        min-height: 0;
+
+        border-radius: 24px;
+
+        overflow: hidden;
 
         background: white;
-        border-radius: 0 0 16px 16px;
-        overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        position: relative;
+
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.12);
       }
 
-      /* Dify iframe จะเต็มพื้นที่ */
-      .chat-container iframe {
-        margin-top: 5px;
+      /* IFRAME */
+      .chat-wrapper iframe {
         width: 100%;
         height: 100%;
+
         border: none;
 
         display: block;
       }
 
-      /* Responsive สำหรับมือถือ */
-      @media (max-width: 768px) {
-        .container {
-          padding: 10px;
-        }
-
-        .header {
-          padding: 16px 20px;
-        }
-
-        .header h1 {
-          font-size: 20px;
-        }
-      }
-
-      /* Loading indicator ขณะโหลด Dify */
+      /* LOADING */
       .loading {
         position: absolute;
+
         top: 50%;
         left: 50%;
+
         transform: translate(-50%, -50%);
+
         text-align: center;
-        color: #666;
+
+        color: white;
+
+        z-index: 100;
       }
 
       .spinner {
-        border: 3px solid #f3f3f3;
-        border-top: 3px solid #667eea;
+        width: 42px;
+        height: 42px;
+
+        border: 4px solid rgba(255, 255, 255, 0.2);
+        border-top: 4px solid white;
+
         border-radius: 50%;
-        width: 40px;
-        height: 40px;
+
         animation: spin 1s linear infinite;
-        margin: 0 auto 12px;
+
+        margin: 0 auto 14px;
       }
 
       @keyframes spin {
         0% {
           transform: rotate(0deg);
         }
+
         100% {
           transform: rotate(360deg);
         }
       }
+
+      /* MOBILE */
+      @media (max-width: 768px) {
+        .app {
+          padding: 8px;
+          gap: 8px;
+        }
+
+        .header {
+          padding: 16px 18px;
+
+          border-radius: 20px;
+        }
+
+        .logo {
+          width: 46px;
+          height: 46px;
+
+          font-size: 24px;
+        }
+
+        .header-text h1 {
+          font-size: 18px;
+        }
+
+        .header-text p {
+          font-size: 13px;
+        }
+
+        .chat-wrapper {
+          border-radius: 20px;
+        }
+      }
     </style>
   </head>
-  <body>
-    <div class="container">
-      <div class="header">
-        <h1>🤖 Chaiyaphum Tour AI Assistant</h1>
-        <p>น้องภูมิ-ยินดีต้อนรับครับ</p>
-      </div>
 
-      <div class="chat-container">
-        <!-- 🔴 IMPORTANT: ใส่ Code Iframe ของ Dify ตรงนี้ 🔴 -->
+  <body>
+    <!-- LOADING -->
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p>Loading AI Assistant...</p>
+    </div>
+
+    <!-- APP -->
+    <div class="app">
+
+      <!-- HEADER -->
+      <header class="header">
+        <div class="header-top">
+
+          <div class="logo">
+            🤖
+          </div>
+
+          <div class="header-text">
+            <h1>
+              Chaiyaphum Tour AI Assistant
+            </h1>
+
+            <p>
+              น้องภูมิ • AI ผู้ช่วยท่องเที่ยวชัยภูมิ
+            </p>
+          </div>
+
+        </div>
+      </header>
+
+      <!-- CHAT -->
+      <main class="chat-wrapper">
+
         <iframe
+          id="dify-frame"
           src="https://phumtour.cpru.ac.th/chatbot/0Lic1TMWsChh8Bm4"
-          style="width: 100%; height: 100%; min-height: 700px"
-          frameborder="0"
           allow="microphone"
+          loading="lazy"
         >
         </iframe>
-      </div>
+
+      </main>
     </div>
 
     <script>
-      // ตัวเลือกเพิ่มเติม: รีเฟรชขนาดเมื่อ window เปลี่ยน
-      window.addEventListener("resize", function () {
-        const iframe = document.getElementById("dify-iframe");
-        if (iframe) {
-          // บังคับให้ iframe ปรับขนาด
-          iframe.style.height = "100%";
-        }
+      const iframe =
+        document.getElementById("dify-frame");
+
+      const loading =
+        document.getElementById("loading");
+
+      // ซ่อน loading เมื่อ iframe โหลดเสร็จ
+      iframe.addEventListener("load", () => {
+        loading.style.display = "none";
       });
 
-      // ตรวจสอบว่า Dify พร้อมใช้งานแล้ว
-      window.addEventListener("message", function (event) {
-        // รับ event จาก Dify (ถ้าต้องการ)
-        if (event.data && event.data.type === "dify-ready") {
-          console.log("Dify chatbot ready");
-          document.getElementById("loading").style.display = "none";
-        }
-      });
+      // ป้องกัน viewport bug บนมือถือ
+      function setViewportHeight() {
+        document.documentElement.style.setProperty(
+          "--vh",
+          `${window.innerHeight * 0.01}px`
+        );
+      }
+
+      setViewportHeight();
+
+      window.addEventListener(
+        "resize",
+        setViewportHeight
+      );
     </script>
   </body>
 </html>
+
