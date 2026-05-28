@@ -14,6 +14,12 @@
         box-sizing: border-box;
       }
 
+      html,
+      body {
+        height: 100%;
+        overflow: hidden;
+      }
+
       body {
         font-family:
           -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
@@ -30,6 +36,8 @@
         height: 100vh;
         display: flex;
         flex-direction: column;
+
+        overflow: hidden;
       }
 
       /* Header section */
@@ -38,6 +46,8 @@
         border-radius: 16px 16px 0 0;
         padding: 20px 24px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+        flex-shrink: 0; /* สำคัญ */
       }
 
       .header h1 {
@@ -53,7 +63,11 @@
 
       /* Chat container - ที่นี่จะฝัง Dify */
       .chat-container {
+        padding-top: 10px;
         flex: 1;
+
+        min-height: 0; /* สำคัญมาก */
+
         background: white;
         border-radius: 0 0 16px 16px;
         overflow: hidden;
@@ -63,9 +77,12 @@
 
       /* Dify iframe จะเต็มพื้นที่ */
       .chat-container iframe {
+        margin-top: 5px;
         width: 100%;
         height: 100%;
         border: none;
+
+        display: block;
       }
 
       /* Responsive สำหรับมือถือ */
@@ -117,7 +134,7 @@
     <div class="container">
       <div class="header">
         <h1>🤖 Chaiyaphum Tour AI Assistant</h1>
-        <p>น้องภูมิ-ยินดีต้อนรับครับ </p>
+        <p>น้องภูมิ-ยินดีต้อนรับครับ</p>
       </div>
 
       <div class="chat-container">
