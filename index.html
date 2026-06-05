@@ -1,265 +1,73 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
-  <head>
-    <meta charset="UTF-8" />
-
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
-
-    <title>Chaiyaphum Tour AI Assistant</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chaiyaphum Tour AI Chatbot</title>
 
     <style>
-      /* RESET */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      html,
-      body {
-        width: 100%;
-        height: 100%;
-      }
-
-      body {
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-
-        overflow: hidden;
-      }
-
-      /* APP */
-      .app {
-        width: 100%;
-        height: 100dvh;
-
-        padding: 12px;
-
-        display: flex;
-        flex-direction: column;
-
-        gap: 12px;
-      }
-
-      /* HEADER */
-      .header {
-        background: rgba(255, 255, 255, 0.95);
-
-        backdrop-filter: blur(12px);
-
-        border-radius: 24px;
-
-        padding: 20px 24px;
-
-        box-shadow:
-          0 4px 20px rgba(0, 0, 0, 0.08),
-          0 2px 6px rgba(0, 0, 0, 0.04);
-
-        flex-shrink: 0;
-
-        z-index: 10;
-      }
-
-      .header-top {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-      }
-
-      .logo {
-        width: 54px;
-        height: 54px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        border-radius: 16px;
-
-        background: linear-gradient(135deg, #667eea, #764ba2);
-
-        color: white;
-
-        font-size: 28px;
-
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-      }
-
-      .header-text h1 {
-        font-size: 22px;
-        font-weight: 700;
-
-        color: #111827;
-      }
-
-      .header-text p {
-        margin-top: 4px;
-
-        color: #6b7280;
-
-        font-size: 14px;
-      }
-
-      /* CHAT */
-      .chat-wrapper {
-        flex: 1;
-
-        min-height: 0;
-
-        border-radius: 24px;
-
-        overflow: hidden;
-
-        background: white;
-
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-      }
-
-      /* IFRAME */
-      .chat-wrapper iframe {
-        width: 100%;
-        height: 100%;
-
-        border: none;
-
-        display: block;
-      }
-
-      /* LOADING */
-      .loading {
-        position: absolute;
-
-        top: 50%;
-        left: 50%;
-
-        transform: translate(-50%, -50%);
-
-        text-align: center;
-
-        color: white;
-
-        z-index: 100;
-      }
-
-      .spinner {
-        width: 42px;
-        height: 42px;
-
-        border: 4px solid rgba(255, 255, 255, 0.2);
-        border-top: 4px solid white;
-
-        border-radius: 50%;
-
-        animation: spin 1s linear infinite;
-
-        margin: 0 auto 14px;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-
-      /* MOBILE */
-      @media (max-width: 768px) {
-        .app {
-          padding: 8px;
-          gap: 8px;
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: "Sarabun", sans-serif;
+            background-color: #f5f5f5;
         }
 
         .header {
-          padding: 16px 18px;
-
-          border-radius: 20px;
+            height: 60px;
+            background: #0d6efd;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: bold;
         }
 
-        .logo {
-          width: 46px;
-          height: 46px;
-
-          font-size: 24px;
+        .chat-container {
+            width: 100%;
+            height: calc(100vh - 60px);
         }
 
-        .header-text h1 {
-          font-size: 18px;
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
-        .header-text p {
-          font-size: 13px;
-        }
+        @media (max-width: 768px) {
+            .header {
+                font-size: 18px;
+                height: 50px;
+            }
 
-        .chat-wrapper {
-          border-radius: 20px;
+            .chat-container {
+                height: calc(100vh - 50px);
+            }
         }
-      }
     </style>
-  </head>
+</head>
 
-  <body>
-    <!-- LOADING -->
-    <div class="loading" id="loading">
-      <div class="spinner"></div>
-      <p>Loading AI Assistant...</p>
+<body>
+
+    <div class="header">
+        🤖 Chaiyaphum Tour AI Chatbot
     </div>
 
-    <!-- APP -->
-    <div class="app">
-      <!-- HEADER -->
-      <header class="header">
-        <div class="header-top">
-          <div class="logo">🤖</div>
-
-          <div class="header-text">
-            <h1>Chaiyaphum Tour AI Assistant</h1>
-
-            <p>น้องภูมิ • AI ผู้ช่วยท่องเที่ยวชัยภูมิ</p>
-          </div>
-        </div>
-      </header>
-
-      <!-- CHAT -->
-      <main class="chat-wrapper">
+    <div class="chat-container">
         <iframe
-          src="http://phumtour.cpru.ac.th/chatbot/TgEOjm6RbKFcLwrW"
-          style="width: 100%; height: 100%; min-height: 700px"
-          frameborder="0"
-          allow="microphone"
-        >
+            src="https://phumtour.cpru.ac.th/chatbot/TgEOjm6RbKFcLwrW"
+            allow="microphone">
         </iframe>
-      </main>
     </div>
 
-    <script>
-      const iframe = document.getElementById("dify-frame");
-
-      const loading = document.getElementById("loading");
-
-      // ซ่อน loading เมื่อ iframe โหลดเสร็จ
-      iframe.addEventListener("load", () => {
-        loading.style.display = "none";
-      });
-
-      // ป้องกัน viewport bug บนมือถือ
-      function setViewportHeight() {
-        document.documentElement.style.setProperty(
-          "--vh",
-          `${window.innerHeight * 0.01}px`,
-        );
-      }
-
-      setViewportHeight();
-
-      window.addEventListener("resize", setViewportHeight);
-    </script>
-  </body>
+</body>
 </html>
